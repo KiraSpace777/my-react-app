@@ -1,20 +1,17 @@
 // ----------------------------------------------
-// ---------- Getting start CODE ----------------
+// --------- 2.4.1 - Компоненти -----------------
 // ----------------------------------------------
 
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
+// import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./components/App";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+createRoot(document.getElementById("root") as HTMLElement).render(<App />);
 
-// ----------------------------------------------
-// --------- Workbook notes 3.2 coding ----------
-// ----------------------------------------------
+// ------------------------------------------------
+// --------- Workbook notes 2.3.2 coding ----------
+// ------------------------------------------------
 
 // import { createRoot } from "react-dom/client";
 
@@ -37,7 +34,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 // );
 
 // ----------------------------------------------
-// --------- Workbook notes 3.1 coding ----------
+// --------- Workbook notes 2.3.1 coding ----------
 // ----------------------------------------------
 
 // import { createRoot } from "react-dom/client";
@@ -56,12 +53,13 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 // );
 
 // ----------------------------------------------
-// --------- "ZERO"/install CODE ----------------
+// --------- "ZERO"/installation CODE -----------
 // ----------------------------------------------
+
 // import { StrictMode } from "react";
 // import { createRoot } from "react-dom/client";
 // import "./index.css";
-// import App from "./App.tsx";
+// import App from "./components/App.tsx";
 
 // createRoot(document.getElementById("root")!).render(
 //   <StrictMode>
