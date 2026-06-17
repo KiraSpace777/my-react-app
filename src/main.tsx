@@ -1,13 +1,29 @@
 // ----------------------------------------------
+// ------ 2.12.1 - Нормалізація стилів ----------
+// ----------------------------------------------
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./components/App";
+import "modern-normalize";
+import "./global.css";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
+
+// ----------------------------------------------
 // --------- 2.4.1 - Компоненти -----------------
 // ----------------------------------------------
 
 // import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import App from "./components/App";
-import "./index.css";
+// import { createRoot } from "react-dom/client";
+// import App from "./components/App";
+// import "./index.css";
 
-createRoot(document.getElementById("root") as HTMLElement).render(<App />);
+// createRoot(document.getElementById("root") as HTMLElement).render(<App />);
 
 // ------------------------------------------------
 // --------- Workbook notes 2.3.2 coding ----------
