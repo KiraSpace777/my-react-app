@@ -1,6 +1,10 @@
 /* ---------------------------------------------- */
-/* ---- 2.13.3 Повторне використання стилів / Використання
+/* ---- 2.15.1 - Обробка подій / Інлайн-функції
 /* ---------------------------------------------- */
+// 1. Додаємо функцію обробки кліку всередину компонента App перед return
+/* 2. Передаємо функцію у властивість onClick для кожної кнопки <Button onClick={handleClick} /> */
+/* ---------------------------------------------- */
+
 import Product from "./Product";
 import Button from "./Button";
 
@@ -8,6 +12,7 @@ export default function App() {
   return (
     <>
       <h1>Best selling</h1>
+
       <Product
         name="Tacos With Lime"
         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
@@ -18,11 +23,79 @@ export default function App() {
         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
         price={14.29}
       />
+
+      {/* Кастомні кнопки, вони не реагують на кліки 2.13*/}
       <Button variant="primary" text="Login" />
       <Button variant="secondary" text="Follow" />
+
+      {/* Інлайн-функція для цієї кнопки що реагує на кліки 2.15*/}
+      <button onClick={() => console.log("Clicked!")}>Click me!</button>
     </>
   );
 }
+/* ---------------------------------------------- */
+/* ---- 2.15.1 - Обробка подій / Обробка кліку
+/* ---------------------------------------------- */
+// 1. Додаємо функцію обробки кліку всередину компонента App перед return
+/* 2. Передаємо функцію у властивість onClick для кожної кнопки <Button onClick={handleClick} /> */
+/* ---------------------------------------------- */
+
+// import Product from "./Product";
+// import Button from "./Button";
+
+// export default function App() {
+//   const handleClick = () => {
+//     console.log("I'm a button!");
+//   };
+
+//   return (
+//     <>
+//       <h1>Best selling</h1>
+//       <Product
+//         name="Tacos With Lime"
+//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
+//         price={10.99}
+//       />
+//       <Product
+//         name="Fries and Burger"
+//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
+//         price={14.29}
+//       />
+
+//       <Button variant="primary" text="Login" />
+//       <Button variant="secondary" text="Follow" />
+
+//       <button onClick={handleClick}>Click me!</button>
+//     </>
+//   );
+// }
+
+/* ---------------------------------------------- */
+/* ---- 2.13.3 Повторне використання стилів / Використання
+/* ---------------------------------------------- */
+// import Product from "./Product";
+// import Button from "./Button";
+
+// export default function App() {
+
+//   return (
+//     <>
+//       <h1>Best selling</h1>
+//       <Product
+//         name="Tacos With Lime"
+//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
+//         price={10.99}
+//       />
+//       <Product
+//         name="Fries and Burger"
+//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
+//         price={14.29}
+//       />
+//       <Button variant="primary" text="Login" />
+//       <Button variant="secondary" text="Follow" />
+//     </>
+//   );
+// }
 
 // ----------------------------------------------
 // 2.5.3 - Властивості компонента/ Декілька props
