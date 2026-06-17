@@ -1,34 +1,16 @@
 // Файл main.tsx відповідає за запуск рендеру додатка "App".
 
 // ----------------------------------------------
-// --------- 2.9.1 - Рендер додатка в DOM
+// ------ 2.12.1 - Нормалізація стилів ----------
 // ----------------------------------------------
-// document.getElementById("root") – ми отримуємо посилання на DOM-елемент з index.html, у який React вставить розмітку. Це той самий <div id="root"></div> у HTML.
-// ReactDOM.createRoot(container) – створює "React-корінь" для рендерингу.
-// .render(element) – запускає рендер компонента App і всіх вкладених у нього компонентів.
-// У типовому проєкті використовується один виклик render(), щоб рендерити весь інтерфейс, починаючи з App.
-// -------------------------
-// <React.StrictMode>, для чого він потрібен:
-// -----------------------------
-// Попереджає про застарілі або небезпечні API.
-// Допомагає виявити нечисті побічні ефекти.
-// У режимі розробки дублює деякі виклики, щоб перевірити стабільність компонента.
-// Показує попередження у консолі, якщо знайдено проблеми.
-// ----------------------------------------------
-// Підсумок
-// ----------------------------------------------
-// Файл main.tsx відповідає за запуск рендеру вашого додатка.
-// createRoot().render() вставляє React-компоненти у DOM.
-// Обгорніть App у <React.StrictMode>, щоб отримати підказки та перевірки під час розробки.
-// Усе рендериться в елемент <div id="root"></div> в файлі index.html.
-// ----------------------------------------------
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./components/App";
+import "modern-normalize";
+import "./global.css";
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
@@ -38,6 +20,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 // --------- 2.4.1 - Компоненти -----------------
 // ----------------------------------------------
 
+// import { StrictMode } from "react";
 // import { createRoot } from "react-dom/client";
 // import App from "./components/App";
 // import "./index.css";

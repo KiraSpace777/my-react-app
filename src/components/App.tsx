@@ -1,9 +1,8 @@
-// ----------------------------------------------
-// 2.5.3 - Властивості компонента/ Декілька props
-// ----------------------------------------------
-// При використанні компонента Product передаємо значення решти пропсів з Product.tsx
-// ----------------------------------------------
+/* ---------------------------------------------- */
+/* ---- 2.13.3 Повторне використання стилів / Використання
+/* ---------------------------------------------- */
 import Product from "./Product";
+import Button from "./Button";
 
 export default function App() {
   return (
@@ -19,9 +18,36 @@ export default function App() {
         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
         price={14.29}
       />
+      <Button variant="primary" text="Login" />
+      <Button variant="secondary" text="Follow" />
     </>
   );
 }
+
+// ----------------------------------------------
+// 2.5.3 - Властивості компонента/ Декілька props
+// ----------------------------------------------
+// При використанні компонента Product передаємо значення решти пропсів з Product.tsx
+// ----------------------------------------------
+// import Product from "./Product";
+
+// export default function App() {
+//   return (
+//     <>
+//       <h1>Best selling</h1>
+//       <Product
+//         name="Tacos With Lime"
+//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
+//         price={10.99}
+//       />
+//       <Product
+//         name="Fries and Burger"
+//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
+//         price={14.29}
+//       />
+//     </>
+//   );
+// }
 
 // ----------------------------------------------
 // 2.5.2 - Властивості компонента/Передача значень props
