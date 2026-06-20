@@ -51,13 +51,13 @@ export default function App() {
     <>
       <h1>Best selling</h1>
       <Product
-        name="Tacos With Lime"
         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
+        name="Tacos With Lime"
         price={10.99}
       />
       <Product
-        name="Fries and Burger"
         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
+        name="Fries and Burger"
         price={14.29}
       />
       <h3>2.20.1 --- Локальність стану</h3>
