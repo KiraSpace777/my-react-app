@@ -1,18 +1,55 @@
-/* ---------------------------------------------- */
-/* ---- 2.15.1 - Обробка подій / Інлайн-функції
-/* ---------------------------------------------- */
-// 1. Додаємо функцію обробки кліку всередину компонента App перед return
-/* 2. Передаємо функцію у властивість onClick для кожної кнопки <Button onClick={handleClick} /> */
-/* ---------------------------------------------- */
-
 import Product from "./Product";
-import Button from "./Button";
+import { useState } from "react";
+import { ClickCounter1, ClickCounter2 } from "./ClickCounter";
+
+interface Values {
+  x: number;
+  y: number;
+}
 
 export default function App() {
+  const [clicks, setClicks] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClick = () => {
+    // 2.17.2  Використовуємо setClicks для зміни стану clicks
+    setClicks(clicks + 1);
+  };
+
+  const toggleMessage = () => {
+    setIsOpen(!isOpen);
+  };
+
+  // 2.23.1 Оновлення обʼєктів
+  const [values1, setValues1] = useState<Values>({ x: 0, y: 0 });
+
+  const updateX = () => {
+    setValues1({
+      ...values1,
+      x: values1.x + 1,
+    });
+  };
+
+  const updateY = () => {
+    setValues1({
+      ...values1,
+      y: values1.y + 1,
+    });
+  };
+
+  // 2.23.2. Оновлення обʼєктів / Універсальна функція оновлення
+  const [values2, setValues2] = useState<Values>({ x: 0, y: 0 });
+
+  const updateValue = (key: keyof Values) => {
+    setValues2({
+      ...values2,
+      [key]: values2[key] + 1,
+    });
+  };
+
   return (
     <>
       <h1>Best selling</h1>
-
       <Product
         name="Tacos With Lime"
         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
@@ -23,291 +60,69 @@ export default function App() {
         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
         price={14.29}
       />
+      <h3>2.20.1 --- Локальність стану</h3>
+      <p>Експорт ClickCounter1.jsx / імпорт в App.tsx</p>
+      <p>
+        Стан у React завжди локальний для кожної копії компонента. Якщо ми
+        рендеримо один і той самий компонент кілька разів – кожен екземпляр
+        зберігає свій окремий стан.
+      </p>
+      <ClickCounter1 />
+      <ClickCounter1 />
+      <h3>2.21.2 --- Підняття стану</h3>
+      <p>Експорт ClickCounter2.jsx / імпорт в App.tsx</p>
+      <p>
+        Іноді компоненти мають спільні дані, які мають бути синхронізованими.
+        Наприклад, два або більше компонентів ClickCounter, які мають показувати
+        одну і ту саму кількість кліків. У такому випадку стан потрібно
+        зберігати в їхньому спільному батьківському компоненті – і передавати
+        через пропси. Це називається підняттям стану
+      </p>
+      <ClickCounter2 value={clicks} onUpdate={handleClick} />
+      <ClickCounter2 value={clicks} onUpdate={handleClick} />
+      <h3>2.22. Декілька станів</h3>
+      <p>
+        Кожен стан працює незалежно. Зміна count не впливає на isOpen, і
+        навпаки. Це дозволяє створювати прості, зрозумілі компоненти навіть з
+        кількома логіками всередині.
+      </p>
+      <button onClick={toggleMessage}>
+        {isOpen ? "Hide message" : "Show message"}
+      </button>
+      {isOpen && <p>🎉 Surprise! You toggled me.</p>}
+      <h3>2.23.1 Оновлення обʼєктів</h3>
+      <p>
+        Стан компонента може містити будь-який тип даних, у тому числі об'єкти.
+        Наприклад, збережемо координати x та y в одному об'єкті. Стан у React –
+        тільки для читання. Якщо змінити його напряму, React не помітить змін і
+        не оновить інтерфейс. Не можна змінювати об'єкт напряму! Завжди
+        створюйте новий об’єкт і використовуйте оператор spread (...) для
+        оновлення стану через setValues. Інакше ви випадково видалите інші поля,
+        наприклад, y.
+      </p>
+      <p>
+        x: {values1.x}, y: {values1.y}
+      </p>
+      <button onClick={updateX}>Update x</button>
+      <button onClick={updateY}>Update y</button>
 
-      {/* Кастомні кнопки, вони не реагують на кліки 2.13*/}
-      <Button variant="primary" text="Login" />
-      <Button variant="secondary" text="Follow" />
+      <h3>2.23.2. Оновлення обʼєктів / Універсальна функція оновлення</h3>
+      <p>
+        Якщо потрібно однотипно оновлювати кілька полів об'єкта, не обов'язково
+        створювати окрему функцію для кожного поля (updateX, updateY тощо).
+        Можна зробити одну універсальну функцію, яка приймає ключ поля, яке
+        потрібно змінити.
+      </p>
+      <p>
+        x: {values2.x}, y: {values2.y}
+      </p>
+      <button onClick={() => updateValue("x")}>Update x</button>
+      <button onClick={() => updateValue("y")}>Update y</button>
 
-      {/* Інлайн-функція для цієї кнопки що реагує на кліки 2.15*/}
-      <button onClick={() => console.log("Clicked!")}>Click me!</button>
+      <h4>
+        💡 Пам'ятайте! Ви пишете JSX → React створює віртуальний DOM → Порівнює
+        його зі старим → Вносить тільки потрібні зміни в справжній DOM.
+      </h4>
     </>
   );
 }
-/* ---------------------------------------------- */
-/* ---- 2.15.1 - Обробка подій / Обробка кліку
-/* ---------------------------------------------- */
-// 1. Додаємо функцію обробки кліку всередину компонента App перед return
-/* 2. Передаємо функцію у властивість onClick для кожної кнопки <Button onClick={handleClick} /> */
-/* ---------------------------------------------- */
-
-// import Product from "./Product";
-// import Button from "./Button";
-
-// export default function App() {
-//   const handleClick = () => {
-//     console.log("I'm a button!");
-//   };
-
-//   return (
-//     <>
-//       <h1>Best selling</h1>
-//       <Product
-//         name="Tacos With Lime"
-//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
-//         price={10.99}
-//       />
-//       <Product
-//         name="Fries and Burger"
-//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
-//         price={14.29}
-//       />
-
-//       <Button variant="primary" text="Login" />
-//       <Button variant="secondary" text="Follow" />
-
-//       <button onClick={handleClick}>Click me!</button>
-//     </>
-//   );
-// }
-
-/* ---------------------------------------------- */
-/* ---- 2.13.3 Повторне використання стилів / Використання
-/* ---------------------------------------------- */
-// import Product from "./Product";
-// import Button from "./Button";
-
-// export default function App() {
-
-//   return (
-//     <>
-//       <h1>Best selling</h1>
-//       <Product
-//         name="Tacos With Lime"
-//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
-//         price={10.99}
-//       />
-//       <Product
-//         name="Fries and Burger"
-//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
-//         price={14.29}
-//       />
-//       <Button variant="primary" text="Login" />
-//       <Button variant="secondary" text="Follow" />
-//     </>
-//   );
-// }
-
-// ----------------------------------------------
-// 2.5.3 - Властивості компонента/ Декілька props
-// ----------------------------------------------
-// При використанні компонента Product передаємо значення решти пропсів з Product.tsx
-// ----------------------------------------------
-// import Product from "./Product";
-
-// export default function App() {
-//   return (
-//     <>
-//       <h1>Best selling</h1>
-//       <Product
-//         name="Tacos With Lime"
-//         imgUrl="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?w=640"
-//         price={10.99}
-//       />
-//       <Product
-//         name="Fries and Burger"
-//         imgUrl="https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg?w=640"
-//         price={14.29}
-//       />
-//     </>
-//   );
-// }
-
-// ----------------------------------------------
-// 2.5.2 - Властивості компонента/Передача значень props
-// ----------------------------------------------
-// import Product from "./Product";
-
-// export default function App() {
-//   return (
-//     <>
-//       <h1>Best selling</h1>
-//       <Product name="Tacos With Lime" />
-//       <Product name="Fries and Burger" />
-//     </>
-//   );
-// }
-// ----------------------------------------------
-// --------- 2.4.2 - Компоненти / Імпорт компонента
-// ----------------------------------------------
-
-// import Product from "./Product";
-
-// export default function App() {
-//   return (
-//     <>
-//       <h1>Best selling</h1>
-
-//       <Product />
-//       <Product />
-//       <Product />
-//     </>
-//   );
-// }
-
-// ----------------------------------------------
-// --------- 2.4.1 - Компоненти -----------------
-// ----------------------------------------------
-// Важливі правила
-//
-// Компонент – це функція, яка повертає JSX.
-// Ім’я компонента має починатися з великої літери, пишуться у PascalCase.
-// Компонент використовують у JSX як тег, наприклад: <Product />.
-// У TypeScript файл з компонентом має бути з розширенням .tsx.
-// ----------------------------------------------
-
-// function Product() {
-//   return (
-//     <div>
-//       <h2>Cookies</h2>
-//       <p>Price: 999 credits</p>
-//     </div>
-//   );
-// }
-
-// export default function App() {
-//   return (
-//     <>
-//       <h1>Products</h1>
-
-//       <Product />
-//       <Product />
-//       <Product />
-//     </>
-//   );
-// }
-
-// ----------------------------------------------
-// --------- "ZERO"/installation CODE -----------
-// ----------------------------------------------
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import heroImg from './assets/hero.png'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <section id="center">
-//         <div className="hero">
-//           <img src={heroImg} className="base" width="170" height="179" alt="" />
-//           <img src={reactLogo} className="framework" alt="React logo" />
-//           <img src={viteLogo} className="vite" alt="Vite logo" />
-//         </div>
-//         <div>
-//           <h1>Get started</h1>
-//           <p>
-//             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-//           </p>
-//         </div>
-//         <button
-//           type="button"
-//           className="counter"
-//           onClick={() => setCount((count) => count + 1)}
-//         >
-//           Count is {count}
-//         </button>
-//       </section>
-
-//       <div className="ticks"></div>
-
-//       <section id="next-steps">
-//         <div id="docs">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#documentation-icon"></use>
-//           </svg>
-//           <h2>Documentation</h2>
-//           <p>Your questions, answered</p>
-//           <ul>
-//             <li>
-//               <a href="https://vite.dev/" target="_blank">
-//                 <img className="logo" src={viteLogo} alt="" />
-//                 Explore Vite
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://react.dev/" target="_blank">
-//                 <img className="button-icon" src={reactLogo} alt="" />
-//                 Learn more
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//         <div id="social">
-//           <svg className="icon" role="presentation" aria-hidden="true">
-//             <use href="/icons.svg#social-icon"></use>
-//           </svg>
-//           <h2>Connect with us</h2>
-//           <p>Join the Vite community</p>
-//           <ul>
-//             <li>
-//               <a href="https://github.com/vitejs/vite" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#github-icon"></use>
-//                 </svg>
-//                 GitHub
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://chat.vite.dev/" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#discord-icon"></use>
-//                 </svg>
-//                 Discord
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://x.com/vite_js" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#x-icon"></use>
-//                 </svg>
-//                 X.com
-//               </a>
-//             </li>
-//             <li>
-//               <a href="https://bsky.app/profile/vite.dev" target="_blank">
-//                 <svg
-//                   className="button-icon"
-//                   role="presentation"
-//                   aria-hidden="true"
-//                 >
-//                   <use href="/icons.svg#bluesky-icon"></use>
-//                 </svg>
-//                 Bluesky
-//               </a>
-//             </li>
-//           </ul>
-//         </div>
-//       </section>
-
-//       <div className="ticks"></div>
-//       <section id="spacer"></section>
-//     </>
-//   )
-// }
-
-// export default App
